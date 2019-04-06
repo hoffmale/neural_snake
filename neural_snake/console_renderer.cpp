@@ -1,6 +1,7 @@
 #include "renderer.h"
-#include <iostream>
 #include <unordered_map>
+#include <sstream>
+#include <windows.h>
 
 static std::unordered_map<tile_content, char> tile_to_character_map = {
 	{ tile_content::apple,      '@' },
@@ -13,15 +14,26 @@ static std::unordered_map<tile_content, char> tile_to_character_map = {
 
 void console_renderer::draw()
 {
+	short x = 0, y = 0;
+	auto console = GetStdHandle(STD_OUTPUT_HANDLE);
+	DWORD written;
+
 	for(auto& row : state.field())
 	{
-		for(auto& tile : row)
+		for(auto tile : row)
 		{
-			std::cout << tile_to_character_map[tile];
+			WriteConsoleOutputCharacterA(console, &tile_to_character_map[tile], 1, COORD{ x, y }, &written);
+			++x;
 		}
 
-		std::cout << "\n";
+		++y;
+		x = 0;
 	}
 
-	std::cout << "\nCurrent score: " << state.score() << "\n";
+	auto canvas = std::stringstream{};
+	canvas << "Current score: " << state.score();
+	auto output = canvas.str();
+	auto scorePos = COORD{ 0, short(state.field().size() + 3) };
+
+	WriteConsoleOutputCharacterA(console, output.data(), output.size(), scorePos, &written);
 }

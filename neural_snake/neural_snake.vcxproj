@@ -155,6 +155,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="console_input.cpp" />
     <ClCompile Include="console_renderer.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="simulation.cpp" />
