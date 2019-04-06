@@ -21,7 +21,7 @@ class simulation
 public:
 	simulation(int width, int height);
 
-	//void move(direction dir);
+	void move(direction dir);
 
 	//bool is_running() const;
 
