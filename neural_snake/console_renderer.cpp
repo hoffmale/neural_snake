@@ -37,3 +37,15 @@ void console_renderer::draw()
 
 	WriteConsoleOutputCharacterA(console, output.data(), output.size(), scorePos, &written);
 }
+
+void console_renderer::game_over()
+{
+	DWORD written;
+	auto console = GetStdHandle(STD_OUTPUT_HANDLE);
+	auto out = std::stringstream{};
+	out << "GAME OVER!";
+	auto output = out.str();
+	auto scorePos = COORD{ 0, short(state.field().size() + 10) };
+
+	WriteConsoleOutputCharacterA(console, output.data(), output.size(), scorePos, &written);
+}

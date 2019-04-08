@@ -14,4 +14,7 @@ void snake_game::run()
 		model.move(control.next_move());
 		view.draw();
 	}
+	
+	view.game_over();
 }
+
