@@ -15,30 +15,21 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="simulation.cpp">
+    <ClCompile Include="..\neural_snake\console_input.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="snake_game.cpp">
+    <ClCompile Include="..\neural_snake\console_renderer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\neural_snake\main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="simulation.h">
+    <ClInclude Include="console_input.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="controller.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="renderer.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="snake_game.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="direction.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="tile_content.h">
+    <ClInclude Include="console_renderer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

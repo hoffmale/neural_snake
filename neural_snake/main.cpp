@@ -1,5 +1,9 @@
-#include <memory>
+#include "console_input.h"
+#include "console_renderer.h"
+
 #include "snake_game.h"
+
+#include <memory>
 #include <iostream>
 
 int main()
