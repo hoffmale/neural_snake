@@ -14,11 +14,16 @@ public:
 	virtual void game_over() = 0;
 };
 
+#include <windows.h>
+
 class console_renderer : public renderer
 {
+	HANDLE console;
+	COORD console_size{};
+
 public:
-	console_renderer(simulation& state) : renderer{ state } {}
+	console_renderer(simulation& state);
 
 	void draw() override;
-	void game_over();
+	void game_over() override;
 };

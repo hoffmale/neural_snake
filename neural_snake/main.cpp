@@ -12,7 +12,6 @@ int main()
 		snake_game game(*controller, *model, *view);
 
 		game.run();
-		view->draw();
 	}
 
 	std::cin.get();

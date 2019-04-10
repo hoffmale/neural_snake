@@ -20,7 +20,7 @@ class console_input : public controller
 
 public:
 	console_input();
-	~console_input();
+	virtual ~console_input();
 
 	console_input(console_input&&) = delete;
 	console_input(const console_input&) = delete;
