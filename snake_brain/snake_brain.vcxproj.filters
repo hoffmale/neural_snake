@@ -21,12 +21,21 @@
     <ClInclude Include="ai_feedback.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="snake_brain.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="neuron.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ai_controller.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="ai_feedback.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="snake_brain.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
