@@ -155,14 +155,17 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="simulation.cpp" />
+    <ClCompile Include="board.cpp" />
+    <ClCompile Include="snake.cpp" />
     <ClCompile Include="snake_game.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="board.h" />
     <ClInclude Include="controller.h" />
     <ClInclude Include="direction.h" />
+    <ClInclude Include="position.h" />
     <ClInclude Include="renderer.h" />
-    <ClInclude Include="simulation.h" />
+    <ClInclude Include="snake.h" />
     <ClInclude Include="snake_game.h" />
     <ClInclude Include="tile_content.h" />
   </ItemGroup>

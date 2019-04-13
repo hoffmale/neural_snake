@@ -20,7 +20,7 @@ direction console_input::next_move()
 void console_input::read_input()
 {
 	INPUT_RECORD input;
-	auto console = GetStdHandle(STD_INPUT_HANDLE);
+	const auto console = GetStdHandle(STD_INPUT_HANDLE);
 	DWORD read;
 	ReadConsoleInputA(console, &input, 1, &read);
 

@@ -13,10 +13,10 @@ static std::unordered_map<tile_content, char> tile_to_character_map = {
 };
 
 
-console_renderer::console_renderer(simulation& state) : renderer{ state }, console{ GetStdHandle(STD_OUTPUT_HANDLE) }
+console_renderer::console_renderer(const board& state) : console{ GetStdHandle(STD_OUTPUT_HANDLE) }
 {
-	console_size.X = state.field().front().size() + 1;
-	console_size.Y = state.field().size() + 3;
+	console_size.X = state.width() + 1;
+	console_size.Y = state.height() + 3;
 
 	// resize window to fit
 	SMALL_RECT rect{ 0, 0, console_size.X, console_size.Y };
@@ -29,36 +29,33 @@ console_renderer::console_renderer(simulation& state) : renderer{ state }, conso
 	SetConsoleCursorInfo(console, &cursor);
 }
 
-void console_renderer::draw()
+void console_renderer::draw(const board& state, int score)
 {
-	short x = 0, y = 0;
 	DWORD written;
 
-	for(auto& row : state.field())
+	for(auto row = 0; row < state.height(); ++row)
 	{
-		for(auto tile : row)
+		for(auto col = 0; col < state.width(); ++col)
 		{
-			WriteConsoleOutputCharacterA(console, &tile_to_character_map[tile], 1, COORD{ x, y }, &written);
-			++x;
+			const auto pos = position{ col, row };
+			const auto tile = state.tile(pos);
+			WriteConsoleOutputCharacterA(console, &tile_to_character_map[tile], 1, COORD{ short(col), short(row) }, &written);
 		}
-
-		++y;
-		x = 0;
 	}
 
 	auto canvas = std::stringstream{};
-	canvas << "Current score: " << state.score();
+	canvas << "Current score: " << score;
 	auto output = canvas.str();
 
-	auto scorePos = COORD{ 0, console_size.Y - 1 };
+	const auto score_pos = COORD{ 0, console_size.Y - 1 };
 
-	WriteConsoleOutputCharacterA(console, output.data(), output.size(), scorePos, &written);
+	WriteConsoleOutputCharacterA(console, output.data(), output.size(), score_pos, &written);
 }
 
 void console_renderer::game_over()
 {
 	DWORD written;
-	auto gameOver = std::string("GAME OVER");
+	auto game_over = std::string("GAME OVER");
 
 	for(auto x = 0; x < console_size.X; ++x)
 	{
@@ -67,7 +64,7 @@ void console_renderer::game_over()
 			WriteConsoleOutputCharacterA(console, " ", 1, COORD{ short(x), short(y) }, &written);
 		}
 	}
-	auto scorePos = COORD{ short(console_size.X - gameOver.size()) / 2, console_size.Y / 2 };
+	const auto score_pos = COORD{ short(console_size.X - game_over.size()) / 2, console_size.Y / 2 };
 
-	WriteConsoleOutputCharacterA(console, gameOver.data(), gameOver.size(), scorePos, &written);
+	WriteConsoleOutputCharacterA(console, game_over.data(), game_over.size(), score_pos, &written);
 }

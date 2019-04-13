@@ -10,8 +10,8 @@ class console_renderer : public renderer
 	COORD console_size{};
 
 public:
-	console_renderer(simulation& state);
+	console_renderer(const board& state);
 
-	void draw() override;
+	void draw(const board& state, int score) override;
 	void game_over() override;
 };
