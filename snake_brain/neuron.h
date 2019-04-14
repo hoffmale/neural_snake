@@ -115,6 +115,8 @@ struct neural_network
 
 class trainer
 {
+public:
+
 	neural_network& nn;
 
 	std::vector<std::vector<double>> inputs;
