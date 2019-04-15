@@ -14,6 +14,28 @@ Window {
 	title: "Snake"
 	color: "#ffffff"
 
+	Item {
+		focus: true
+
+		Keys.enabled: true
+		Keys.onPressed: {
+			switch(event.key) {
+				case Qt.Key_W:
+					gameController.up();
+					break;
+				case Qt.Key_A:
+					gameController.left();
+					break;
+				case Qt.Key_S:
+					gameController.down();
+					break;
+				case Qt.Key_D:
+					gameController.right();
+					break;
+			}
+		}
+	}
+
 	Pane {
 		anchors.centerIn: parent
 
@@ -26,24 +48,28 @@ Window {
 		Grid {
 			id: snakeView
 
-			property alias snakeBoard: snakeViewRepeater.model
-
 			anchors.margins: 10
-			columns: 30
+			columns: gameState.width
 			spacing: root.cellSpacing
 
 			Repeater {
 				id: snakeViewRepeater
 
-				model: 15*30
+				model: gameState
 
 				delegate: Rectangle {
 					id: snakeViewSquare
 
+					property var colors: ["#ff0000", "#555555", "#aaaaaa", "#ffffff", "#ffffff"]
+
 					width: root.cellSize
 					height: root.cellSize
 
-					color: "#555555"
+					color: colors[tile]
+				}
+
+				Component.onCompleted: {
+					console.log(gameState.rowCount);
 				}
 			}
 		}

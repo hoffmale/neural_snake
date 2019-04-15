@@ -12,7 +12,7 @@ namespace roles
 	};
 }
 
-class board_model : public QAbstractListModel, public virtual renderer
+class board_model : public QAbstractListModel
 {
 	Q_OBJECT
 
@@ -21,26 +21,32 @@ class board_model : public QAbstractListModel, public virtual renderer
 	Q_PROPERTY(int score   MEMBER score  CONSTANT)
 
 public:
-	board_model(const board& board);
+	board_model(const board* state = nullptr);
+	board_model(const board_model& other);
+	board_model(board_model&& other) noexcept;
+	~board_model();
 
-	void draw(const board& state, int score) override;
-	void game_over() override;
+	board_model& operator=(const board_model& other);
+	board_model& operator=(board_model&& other) noexcept;
+
+public slots:
+	void draw(const board& state, int score);
+	void game_over();
 
 	int rowCount(const QModelIndex& parent) const override;
 	QVariant data(const QModelIndex& index, int role) const override;
-
-signals:
-	void game_finished();
 
 protected:
 	QHash<int, QByteArray> roleNames() const override;
 
 private:
-	const board& board;
+	board state;
 	int score;
 	int width;
 	int height;
 };
 
-Q_DECLARE_METATYPE(board_model);
-Q_DECLARE_METATYPE(board_model*);
+Q_DECLARE_METATYPE(board)
+Q_DECLARE_METATYPE(board_model)
+Q_DECLARE_METATYPE(board_model*)
+Q_DECLARE_METATYPE(tile_content)

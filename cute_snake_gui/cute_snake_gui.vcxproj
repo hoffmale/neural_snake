@@ -118,7 +118,14 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="board_model.cpp" />
-    <ClCompile Include="main.cpp" />
+    <ClCompile Include="main.cpp">
+      <OutputFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.\GeneratedFiles\$(ConfigurationName)\%(Filename).moc</OutputFile>
+      <DynamicSource Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">input</DynamicSource>
+      <OutputFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.\GeneratedFiles\$(ConfigurationName)\%(Filename).moc</OutputFile>
+      <DynamicSource Condition="'$(Configuration)|$(Platform)'=='Release|x64'">input</DynamicSource>
+    </ClCompile>
+    <ClCompile Include="qt_controller.cpp" />
+    <ClCompile Include="qt_renderer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <QtRcc Include="qml.qrc" />
@@ -128,6 +135,17 @@
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="board_model.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\neural_snake\neural_snake.vcxproj">
+      <Project>{0af069dd-bec7-43fb-8745-38a7ef89a2b1}</Project>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <QtMoc Include="qt_renderer.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <QtMoc Include="qt_controller.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">

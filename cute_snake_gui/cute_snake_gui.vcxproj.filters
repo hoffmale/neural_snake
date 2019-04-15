@@ -30,10 +30,16 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="board_model.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="board_model.cpp">
+    <ClCompile Include="qt_renderer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="qt_controller.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -47,6 +53,12 @@
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="board_model.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="qt_renderer.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="qt_controller.h">
       <Filter>Header Files</Filter>
     </QtMoc>
   </ItemGroup>

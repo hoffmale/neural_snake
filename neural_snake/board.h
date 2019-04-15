@@ -11,7 +11,7 @@ class board
 	int board_height;
 
 public:
-	board(int width, int height);
+	board(int width = 30, int height = 15);
 
 	int width() const noexcept;
 	int height() const noexcept;
