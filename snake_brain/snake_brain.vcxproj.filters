@@ -24,10 +24,7 @@
     <ClInclude Include="snake_brain.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="neuron.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="network.h">
+    <ClInclude Include="Matrix.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -41,8 +38,8 @@
     <ClCompile Include="snake_brain.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="network.cpp">
-      <Filter>Header Files</Filter>
+    <ClCompile Include="Matrix.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

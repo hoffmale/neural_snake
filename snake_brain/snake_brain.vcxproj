@@ -21,14 +21,13 @@
   <ItemGroup>
     <ClInclude Include="ai_controller.h" />
     <ClInclude Include="ai_feedback.h" />
-    <ClInclude Include="network.h" />
-    <ClInclude Include="neuron.h" />
+    <ClInclude Include="Matrix.h" />
     <ClInclude Include="snake_brain.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ai_controller.cpp" />
     <ClCompile Include="ai_feedback.cpp" />
-    <ClCompile Include="network.cpp" />
+    <ClCompile Include="Matrix.cpp" />
     <ClCompile Include="snake_brain.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
