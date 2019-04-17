@@ -145,7 +145,7 @@ Matrix Matrix::flatten(Matrix const& matrix1)
 	{
 		for (int j = 0; j < result.num_cols; ++j)
 		{
-
+			result.matrix[i*result.num_cols][j] = matrix[i][j]
 		}
 	}
 	return result;
