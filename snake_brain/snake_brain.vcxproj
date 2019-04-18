@@ -21,12 +21,14 @@
   <ItemGroup>
     <ClInclude Include="ai_controller.h" />
     <ClInclude Include="ai_feedback.h" />
+    <ClInclude Include="linear_algebra.h" />
     <ClInclude Include="Matrix.h" />
     <ClInclude Include="snake_brain.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ai_controller.cpp" />
     <ClCompile Include="ai_feedback.cpp" />
+    <ClCompile Include="linear_algebra.cpp" />
     <ClCompile Include="Matrix.cpp" />
     <ClCompile Include="snake_brain.cpp" />
   </ItemGroup>
