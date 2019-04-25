@@ -8,7 +8,7 @@ Matrix::Matrix() {}
 Matrix::Matrix(int num_rows, int num_cols) :
 	num_rows(num_rows),
 	num_cols(num_cols),
-	matrix(std::vector<std::vector<double>>(num_rows, std::vector<double>(num_cols)));
+	matrix(std::vector<std::vector<double>>(num_rows, std::vector<double>(num_cols)))
 {
 	std::uniform_real_distribution<double> unif(-1, 1);
 	std::random_device rd;
@@ -43,9 +43,9 @@ double Matrix::get(int row, int column)
 
 void Matrix::print()
 {
-	for (int i = 0; i < matrix.size(); ++i)
+	for (auto i = 0u; i < matrix.size(); ++i)
 	{
-		for (int j = 0; j < matrix[0].size(); ++j)
+		for (auto j = 0u; j < matrix[i].size(); ++j)
 		{
 			std::cout << matrix[i][j] << " ";
 		}

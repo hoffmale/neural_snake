@@ -8,9 +8,9 @@ namespace np
 	Matrix multiply(Matrix& mat1, double c)
 	{
 		Matrix result(mat1.get_rows(), mat1.get_columns());
-		for (int i = 0; i < mat1.get_rows(); ++i)
+		for (auto i = 0u; i < mat1.get_rows(); ++i)
 		{
-			for (int j = 0; j < mat1.get_rows(); ++j)
+			for (auto j = 0u; j < mat1.get_rows(); ++j)
 			{
 				result.set(i, j, mat1.get(i, j) * c);
 			}
@@ -21,13 +21,13 @@ namespace np
 	// Hadamard product of matrices
 	Matrix multiply(Matrix& mat1, Matrix& mat2)
 	{
-		assert(mat1.get_rows() == mat2.get_rows && mat1.get_columns() == mat2.get_columns());
+		assert(mat1.get_rows() == mat2.get_rows() && mat1.get_columns() == mat2.get_columns());
 		Matrix result(mat2.get_rows(), mat2.get_columns());
-		for (int i = 0; i < mat1.get_rows(); ++i)
+		for (auto i = 0u; i < mat1.get_rows(); ++i)
 		{
-			for (int j = 0; j < mat1.get_rows(); ++j)
+			for (auto j = 0u; j < mat1.get_rows(); ++j)
 			{
-				result.set(i, j, mat1.get(i, j) * mat2.get(i,j));
+				result.set(i, j, mat1.get(i, j) * mat2.get(i, j));
 			}
 		}
 		return result;
@@ -38,7 +38,7 @@ namespace np
 	{
 		assert(vec1.size() == vec2.size());
 		std::vector<double> result;
-		for (int i = 0; i < vec1.size(); ++i)
+		for (auto i = 0u; i < vec1.size(); ++i)
 		{
 			result.push_back(vec1[i] * vec2[i]);
 		}
@@ -51,12 +51,12 @@ namespace np
 		assert(mat1.get_columns() == mat2.get_rows());
 
 		Matrix result(mat1.get_rows(), mat1.get_columns());
-		for (int i = 0; i < result.get_rows(); ++i)
+		for (auto i = 0u; i < result.get_rows(); ++i)
 		{
-			for (int j = 0; j < result.get_rows(); ++j)
+			for (auto j = 0u; j < result.get_rows(); ++j)
 			{
 				double x = 0;
-				for (int k = 0; k < mat1.get_columns(); ++k)
+				for (std::size_t k = 0; k < mat1.get_columns(); ++k)
 				{
 					x += (mat1.get(i, k) * mat2.get(k, j));
 				}
@@ -71,10 +71,10 @@ namespace np
 	{
 		assert(mat1.get_columns() == vec1.size());
 		std::vector<double> result;
-		for (int i = 0; i < mat1.get_rows(); ++i)
+		for (auto i = 0u; i < mat1.get_rows(); ++i)
 		{
 			double x = 0;
-			for (int j = 0; j < mat1.get_columns(); ++j)
+			for (auto j = 0u; j < mat1.get_columns(); ++j)
 			{
 				x += (mat1.get(i, j) * vec1[j]);
 			}
@@ -84,15 +84,12 @@ namespace np
 	}
 
 	// Dot product of a 2 vectors
-	Matrix dot(std::vector<double>& vec1, std::vector<double>& vec2)
+	double dot(std::vector<double>& vec1, std::vector<double>& vec2)
 	{
-		Matrix result(vec1.size(), vec2.size());
-		for (int i = 0; i < result.get_rows(); ++i)
+		double result = 0;
+		for (auto i = 0u; i < vec1.size(); ++i)
 		{
-			for (int j = 0; j < result.get_columns(); ++j)
-			{
-				result.set(i, j, vec1[i] * vec2[i]);
-			}
+			result += vec1[i] * vec2[i];
 		}
 		return result;
 	}
@@ -103,9 +100,9 @@ namespace np
 		assert(mat1.get_rows() == mat2.get_rows() && mat1.get_columns() == mat2.get_columns());
 
 		Matrix result(mat1.get_rows(), mat1.get_columns());
-		for (int i = 0; i < mat1.get_rows(); ++i)
+		for (auto i = 0u; i < mat1.get_rows(); ++i)
 		{
-			for (int j = 0; j < mat1.get_columns(); ++j)
+			for (auto j = 0u; j < mat1.get_columns(); ++j)
 			{
 				result.set(i, j, mat1.get(i, j) + mat2.get(i, j));
 			}
@@ -119,10 +116,11 @@ namespace np
 		assert(vec1.size() == vec2.size());
 
 		std::vector<double> result;
-		for (int i = 0; i < vec1.size(); ++i)
+		for (auto i = 0u; i < vec1.size(); ++i)
 		{
 			result.push_back(vec1[i] + vec2[i]);
 		}
+		return result;
 	}
 
 	// Subtract two matrices together
@@ -131,9 +129,9 @@ namespace np
 		assert(mat1.get_rows() == mat2.get_rows() && mat1.get_columns() == mat2.get_columns());
 
 		Matrix result(mat1.get_rows(), mat1.get_columns());
-		for (int i = 0; i < mat1.get_rows(); ++i)
+		for (auto i = 0u; i < mat1.get_rows(); ++i)
 		{
-			for (int j = 0; j < mat1.get_columns(); ++j)
+			for (auto j = 0u; j < mat1.get_columns(); ++j)
 			{
 				result.set(i, j, mat1.get(i, j) - mat2.get(i, j));
 			}
@@ -147,19 +145,20 @@ namespace np
 		assert(vec1.size() == vec2.size());
 
 		std::vector<double> result;
-		for (int i = 0; i < vec1.size(); ++i)
+		for (auto i = 0u; i < vec1.size(); ++i)
 		{
 			result.push_back(vec1[i] - vec2[i]);
 		}
+		return result;
 	}
 
 	// Transpose matrix
 	Matrix transpose(Matrix& mat1)
 	{
 		Matrix result(mat1.get_rows(), mat1.get_columns());
-		for (int i = 0; i < mat1.get_rows(); ++i)
+		for (auto i = 0u; i < mat1.get_rows(); ++i)
 		{
-			for (int j = 0; j < mat1.get_columns(); ++j)
+			for (auto j = 0u; j < mat1.get_columns(); ++j)
 			{
 				result.set(j, i, mat1.get(i, j));
 			}
@@ -171,11 +170,11 @@ namespace np
 	Matrix apply_function(Matrix& mat1, double(*function)(double))
 	{
 		Matrix result(mat1.get_rows(), mat1.get_columns());
-		for (int i = 0; i < mat1.get_rows(); ++i)
+		for (auto i = 0u; i < mat1.get_rows(); ++i)
 		{
-			for (int j = 0; j < mat1.get_columns(); ++j)
+			for (auto j = 0u; j < mat1.get_columns(); ++j)
 			{
-				double val = (*function)(mat1.get(i,j));
+				double val = (*function)(mat1.get(i, j));
 				result.set(i, j, val);
 			}
 		}
@@ -186,7 +185,7 @@ namespace np
 	std::vector<double> apply_function(std::vector<double>& vec1, double(*function)(double))
 	{
 		std::vector<double> result;
-		for (int i = 0; i < vec1.size(); ++i)
+		for (auto i = 0u; i < vec1.size(); ++i)
 		{
 			double val = (*function)(vec1[i]);
 			result.push_back(val);
@@ -198,14 +197,14 @@ namespace np
 	Matrix normalize(Matrix& mat1)
 	{
 		Matrix result(mat1.get_rows(), mat1.get_columns());
-		for (int i = 0; i < mat1.get_rows(); ++i)
+		for (auto i = 0u; i < mat1.get_rows(); ++i)
 		{
 			double sum = 0;
-			for (int j = 0; j < mat1.get_columns(); ++j)
+			for (auto j = 0u; j < mat1.get_columns(); ++j)
 			{
 				sum += mat1.get(i, j);
 			}
-			for (int j = 0; j < mat1.get_columns(); ++j)
+			for (auto j = 0u; j < mat1.get_columns(); ++j)
 			{
 				result.set(i, j, mat1.get(i, j) / sum);
 			}
@@ -218,12 +217,12 @@ namespace np
 	{
 		std::vector<double> result;
 		double sum = 0;
-		for (int i = 0; i < vec1.size(); ++i)
+		for (auto i = 0u; i < vec1.size(); ++i)
 		{
 			sum += vec1[i];
 		}
 		assert(sum != 0);
-		for (int i = 0; i < vec1.size(); i++)
+		for (auto i = 0u; i < vec1.size(); i++)
 		{
 			result.push_back(vec1[i] / sum);
 		}
@@ -234,9 +233,9 @@ namespace np
 	std::vector<double> flatten(Matrix& mat1)
 	{
 		std::vector<double> result(mat1.get_rows() * mat1.get_columns());
-		for (int i = 0; i < mat1.get_rows(); ++i)
+		for (auto i = 0u; i < mat1.get_rows(); ++i)
 		{
-			for (int j = 0; j < mat1.get_columns(); ++j)
+			for (auto j = 0u; j < mat1.get_columns(); ++j)
 			{
 				result[i*mat1.get_columns() + j] = mat1.get(i, j);
 			}

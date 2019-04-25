@@ -14,7 +14,7 @@ namespace np
 
 	std::vector<double> dot(Matrix& mat1, std::vector<double>& vec1);							// Dot product of matrix and vector
 
-	Matrix dot(std::vector<double>& vec1, std::vector<double>& vec2);							// Dot product of 2 vectors
+	double dot(std::vector<double>& vec1, std::vector<double>& vec2);							// Dot product of 2 vectors
 
 	Matrix add(Matrix& mat1, Matrix& mat2);														// Add two matrices
 
