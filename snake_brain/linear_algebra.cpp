@@ -242,4 +242,29 @@ namespace np
 		}
 		return result;
 	}
+
+	// Return sum of all elements in matrix
+	double element_sum(Matrix& mat1)
+	{
+		int sum = 0;
+		for (int i = 0; i < mat1.get_rows(); ++i)
+		{
+			for (int j = 0; j < mat1.get_columns(); ++j)
+			{
+				sum += mat1.get(i, j);
+			}
+		}
+		return sum;
+	}
+
+	// Return sum of all elements in vector
+	double element_sum(std::vector<double>& vec1)
+	{
+		int sum = 0;
+		for (int i = 0; i < vec1.size(); ++i)
+		{
+			sum += vec1[i];
+		}
+		return sum;
+	}
 }

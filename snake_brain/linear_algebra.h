@@ -36,4 +36,8 @@ namespace np
 
 	std::vector<double> flatten(Matrix& mat1);													// Flatten a 2D matrix to 1D vector
 
+	double element_sum(Matrix& mat1);															// Return sum of all elements in matrix
+
+	double element_sum(std::vector<double>& vec1);												// Return sum of all elements in vector
+
 }
