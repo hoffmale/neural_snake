@@ -21,6 +21,7 @@
   <ItemGroup>
     <ClInclude Include="ai_controller.h" />
     <ClInclude Include="ai_feedback.h" />
+    <ClInclude Include="cnn.h" />
     <ClInclude Include="linear_algebra.h" />
     <ClInclude Include="Matrix.h" />
     <ClInclude Include="snake_brain.h" />
