@@ -1,4 +1,5 @@
 #include "Matrix.h"
+#include "Utility.h"
 #include <assert.h>
 
 
@@ -19,10 +20,10 @@ namespace np
 	}
 
 	// Hadamard product of matrices
-	Matrix multiply(Matrix& mat1, Matrix& mat2)
+	Matrix multiply(Matrix& mat1, Matrix& mat2, int slice)
 	{
-		assert(mat1.get_rows() == mat2.get_rows() && mat1.get_columns() == mat2.get_columns());
-		Matrix result(mat2.get_rows(), mat2.get_columns());
+		assert(mat1.get_rows() == mat2.get_rows() && mat1.get_columns() == mat2.get_columns() - slice);
+		Matrix result(mat2.get_rows(), mat2.get_columns() - slice);
 		for (auto i = 0u; i < mat1.get_rows(); ++i)
 		{
 			for (auto j = 0u; j < mat1.get_rows(); ++j)
@@ -45,12 +46,27 @@ namespace np
 		return result;
 	}
 
+	// Take dot product and sum all elements
+	double multiply(Matrix& mat1, Matrix& mat2, int xslice, int yslice)
+	{
+		assert(mat2.get_rows() >= mat1.get_rows && mat2.get_columns() >= mat1.get_columns());
+		double sum = 0;
+		for (auto i = 0; i < mat1.get_rows(); ++i)
+		{
+			for (auto j = 0; j < mat1.get_columns(); ++j)
+			{
+				sum += (mat1.get(i, j) * mat2.get(xslice + i, yslice + j));
+			}
+		}
+		return sum;
+	}
+
 	// Dot products between two matrices
-	Matrix dot(Matrix& mat1, Matrix& mat2)
+	Matrix dot(Matrix& mat1, Matrix& mat2, int slice)
 	{
 		assert(mat1.get_columns() == mat2.get_rows());
 
-		Matrix result(mat1.get_rows(), mat1.get_columns());
+		Matrix result(mat1.get_rows(), mat1.get_columns() - slice);
 		for (auto i = 0u; i < result.get_rows(); ++i)
 		{
 			for (auto j = 0u; j < result.get_rows(); ++j)
@@ -67,14 +83,14 @@ namespace np
 	}
 
 	// Dot product of a matrix with a vector
-	std::vector<double> dot(Matrix& mat1, std::vector<double>& vec1)
+	std::vector<double> dot(Matrix& mat1, std::vector<double>& vec1, int slice)
 	{
-		assert(mat1.get_columns() == vec1.size());
+		assert(mat1.get_columns() == vec1.size() - slice);
 		std::vector<double> result;
 		for (auto i = 0u; i < mat1.get_rows(); ++i)
 		{
 			double x = 0;
-			for (auto j = 0u; j < mat1.get_columns(); ++j)
+			for (auto j = 0u; j < mat1.get_columns() - slice; ++j)
 			{
 				x += (mat1.get(i, j) * vec1[j]);
 			}
@@ -92,6 +108,20 @@ namespace np
 			result += vec1[i] * vec2[i];
 		}
 		return result;
+	}
+
+	// Dot product of 2 vectors returning a Rank 1 Matrix
+	Matrix dot(std::vector<double>& vec1, std::vector<double>& vec2, int slice)
+	{
+		Matrix mat(vec1.size(), vec2.size() - slice);
+		for (int i = 0; i < mat.get_rows(); ++i)
+		{
+			for (int j = 0; j < mat.get_columns(); ++j)
+			{
+				mat.set(i, j, vec1[i] * vec2[j]);
+			}
+		}
+		return mat;
 	}
 
 	// Add two matrices together
@@ -266,5 +296,20 @@ namespace np
 			sum += vec1[i];
 		}
 		return sum;
+	}
+
+	// Reshape a vector into a matrix
+	Matrix reshape(std::vector<double>& vec1, Image_Shape shape)
+	{
+		assert(shape.num_rows * shape.num_colums == vec1.size());
+		Matrix mat(shape.num_rows, shape.num_colums);
+		for (int i = 0; i < shape.num_rows; ++i)
+		{
+			for (int j = 0; j < shape.num_colums; ++j)
+			{
+				mat.set(i, j, i*shape.num_rows + j);
+			}
+		}
+		return mat;
 	}
 }

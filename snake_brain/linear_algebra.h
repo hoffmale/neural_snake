@@ -1,20 +1,26 @@
 #pragma once
 #include "Matrix.h"
+#include "Utility.h"
+#include <assert.h>
 
 
 namespace np
 {
 	Matrix multiply(Matrix& mat1, double c);													// Scalar multiplication
 
-	Matrix multiply(Matrix& mat1, Matrix& mat2);												// Hadamard product of matrices
+	Matrix multiply(Matrix& mat1, Matrix& mat2, int slice);										// Hadamard product of matrices
 
 	std::vector<double> multiply(std::vector<double>& vec1, std::vector<double>& vec2);			// Hadamard product of vectors
 
-	Matrix dot(Matrix& mat1, Matrix& mat2);														// Dot product of 2 matrices
+	double multiply(Matrix& mat1, Matrix& mat2, int xslice, int yslice);						// Take dot product and sum all elements
 
-	std::vector<double> dot(Matrix& mat1, std::vector<double>& vec1);							// Dot product of matrix and vector
+	Matrix dot(Matrix& mat1, Matrix& mat2, int slice);											// Dot product of 2 matrices
+
+	std::vector<double> dot(Matrix& mat1, std::vector<double>& vec1, int slice);			    // Dot product of matrix and vector
 
 	double dot(std::vector<double>& vec1, std::vector<double>& vec2);							// Dot product of 2 vectors
+
+	Matrix dot(std::vector<double>& vec1, std::vector<double>& vec2, int slice);				// Dot product of 2 vectors returning a Rank 1 Matrix
 
 	Matrix add(Matrix& mat1, Matrix& mat2);														// Add two matrices
 
@@ -40,4 +46,5 @@ namespace np
 
 	double element_sum(std::vector<double>& vec1);												// Return sum of all elements in vector
 
+	Matrix reshape(std::vector<double>& vec1, Image_Shape shape);								// Reshape a vector into a matrix
 }

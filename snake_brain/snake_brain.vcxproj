@@ -30,6 +30,7 @@
   <ItemGroup>
     <ClCompile Include="ai_controller.cpp" />
     <ClCompile Include="ai_feedback.cpp" />
+    <ClCompile Include="cnn.cpp" />
     <ClCompile Include="linear_algebra.cpp" />
     <ClCompile Include="Matrix.cpp" />
     <ClCompile Include="snake_brain.cpp" />
