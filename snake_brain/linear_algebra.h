@@ -42,6 +42,9 @@ namespace np
 
 	std::vector<double> flatten(Matrix& mat1);													// Flatten a 2D matrix to 1D vector
 
+	double maximum(Matrix & mat1, unsigned int xptr, int yptr,									// Maximum of matrix within boundaries specified by (xptr, yptr, window). 
+                   Image_Shape window, Image_Shape& index);										// Set the index of maximum element in index variable
+
 	double element_sum(Matrix& mat1);															// Return sum of all elements in matrix
 
 	double element_sum(std::vector<double>& vec1);												// Return sum of all elements in vector

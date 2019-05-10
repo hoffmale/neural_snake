@@ -3,6 +3,7 @@
 #include <assert.h>
 
 
+
 namespace np
 {
 	// Scalar multiplication
@@ -271,6 +272,29 @@ namespace np
 			}
 		}
 		return result;
+	}
+
+	// Return the maximum of matrix within the boundaries specified by (xptr, yptr, window)
+	// set the index of maximum element in index variable
+	double maximum(Matrix& mat1, unsigned int xptr, int yptr, Image_Shape window, Image_Shape& index)
+	{
+		assert(xptr + window.num_rows <= mat1.get_rows() && yptr + window.num_colums <= mat1.get_columns());
+
+		double max = -DBL_MAX;
+		unsigned int i = xptr;
+		while (i - xptr < window.num_rows && i < mat1.get_rows()) {
+			unsigned int j = yptr;
+			while (j - yptr < window.num_colums && j < mat1.get_columns()) {
+				if (mat1.get(i, j) > max) {
+					max = mat1.get(i, j);
+					index.num_rows = i;
+					index.num_colums = j;
+				}
+				j++;
+			}
+			i++;
+		}
+		return max;
 	}
 
 	// Return sum of all elements in matrix

@@ -47,5 +47,48 @@ int CNN::forward_propagate(Matrix& input, std::vector<Matrix>& conv_activations,
 	}
 	conv = np::apply_function(conv, fns::relu);
 
+	auto x = conv.get_rows() / pool_window.num_rows;
+	auto y = conv.get_columns() / pool_window.num_colums;
 
+	Matrix pool(conv.get_rows(), conv.get_columns());
+	std::vector<double> flatten_pool;
+
+	// Apply convolution to conv matrix
+	int xptr, yptr = 0;
+	Image_Shape max_index({ 0, 0 });
+	for (int i = 0; i < x; ++i)
+	{
+		xptr = (i * pool_window.num_rows);
+		for (int j = 0; j < y; ++j)
+		{
+			yptr = (j * pool_window.num_colums);
+			double max = np::maximum(conv, xptr, yptr, pool_window, max_index);
+			flatten_pool.push_back(max);
+			pool.set(max_index.num_rows, max_index.num_colums, 1);
+		}
+	}
+
+	conv_activations[0] = pool;
+
+	// Append some bias constant to input and putput of every layer
+	flatten_pool.push_back(1);
+
+	// Apply relu to hidden function
+	Matrix W0 = np::transpose(weights[0]);
+	std::vector<double> hidden = np::dot(W0, flatten_pool);
+	hidden = np::apply_function(hidden, fns::relu);
+	hidden.push_back(1);
+
+	activations[0] = flatten_pool;
+
+	// Apply softmax to get output layer
+	Matrix W1 = np::transpose(weights[1]);
+	std::vector<double> output = np::dot(W1, hidden);
+	output = np::apply_function(output, fns::softmax);
+	output = np::normalize(output);
+
+	activations[1] = hidden;
+	activations[2] = output;
+
+	return 0;
 }
