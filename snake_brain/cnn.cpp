@@ -54,7 +54,7 @@ int CNN::forward_propagate(Matrix& input, std::vector<Matrix>& conv_activations,
 	std::vector<double> flatten_pool;
 
 	// Apply convolution to conv matrix
-	int xptr, yptr = 0;
+	int xptr = 0, yptr = 0;
 	Image_Shape max_index({ 0, 0 });
 	for (int i = 0; i < x; ++i)
 	{
@@ -70,12 +70,12 @@ int CNN::forward_propagate(Matrix& input, std::vector<Matrix>& conv_activations,
 
 	conv_activations[0] = pool;
 
-	// Append some bias constant to input and putput of every layer
+	// Append some bias constant to input and output of every layer
 	flatten_pool.push_back(1);
 
 	// Apply relu to hidden function
 	Matrix W0 = np::transpose(weights[0]);
-	std::vector<double> hidden = np::dot(W0, flatten_pool);
+	std::vector<double> hidden = np::dot(W0, flatten_pool, 0);
 	hidden = np::apply_function(hidden, fns::relu);
 	hidden.push_back(1);
 
@@ -83,12 +83,57 @@ int CNN::forward_propagate(Matrix& input, std::vector<Matrix>& conv_activations,
 
 	// Apply softmax to get output layer
 	Matrix W1 = np::transpose(weights[1]);
-	std::vector<double> output = np::dot(W1, hidden);
+	std::vector<double> output = np::dot(W1, hidden, 0);
 	output = np::apply_function(output, fns::softmax);
 	output = np::normalize(output);
 
 	activations[1] = hidden;
 	activations[2] = output;
+
+	return 0;
+}
+
+int CNN::back_propagate(std::vector<double>& delta_L, std::vector<Matrix>& conv_activations,
+	std::vector<std::vector<double>>& activations, Matrix& input, double(*active_fn_der)(double), double learning_rate)
+{
+	std::vector<double> delta_h = np::dot(weights[1], delta_L, 0);
+	std::vector<double> active = np::apply_function(activations[1], active_fn_der);
+
+	delta_h = np::multiply(delta_h, active);
+
+	std::vector<double> delta_x = np::dot(weights[0], delta_h, 1);
+
+	Matrix delta_conv(conv_activations[0].get_rows(), conv_activations[0].get_columns());
+
+	int counter = 0;
+	for (auto r = 0; r < conv_activations[0].get_rows(); ++r)
+	{
+		for (auto c = 0; c < conv_activations[0].get_columns(); ++c)
+		{
+			if (conv_activations[0].get(r, c) == 1.0)
+			{
+				delta_conv.set(r, c, delta_x[counter]);
+				++counter;
+			}
+		}
+	}
+
+	// Update weights
+	Matrix dW0 = np::dot(activations[0], delta_h, 1);
+	Matrix dW1 = np::dot(activations[1], delta_L, 0);
+	dW0 = np::multiply(dW0, learning_rate);
+	dW1 = np::multiply(dW1, learning_rate);
+
+	weights[0] = np::subtract(weights[0], dW0);
+	weights[1] = np::subtract(weights[1], dW1);
+
+	for (auto i = 0; i < kernel.get_rows(); ++i)
+	{
+		for (auto j = 0; j < kernel.get_columns(); ++j)
+		{
+			kernel.set(i, j, np::multiply(delta_conv, input, i, j));
+		}
+	}
 
 	return 0;
 }

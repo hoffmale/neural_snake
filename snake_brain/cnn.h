@@ -19,7 +19,7 @@ private:
 	Image_Shape pool_window;
 	int forward_propagate(Matrix& input, std::vector<Matrix>& conv_activations, std::vector<std::vector<double>>& activations);
 	int back_propagate(std::vector<double>& delta_L, std::vector<Matrix>& conv_activations,
-		std::vector<double>& activations, Matrix& input, double (active_fn_der)(double), double learning_rate);
+		std::vector<std::vector<double>>& activations, Matrix& input, double(*active_fn_der)(double), double learning_rate);
 
 	Matrix zero_pad(Matrix& X, int pad);				// Pad with zeros of all the images 
 
