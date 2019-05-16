@@ -35,6 +35,8 @@ CNN::CNN(Image_Shape input_dim, Image_Shape kernel_size, Image_Shape pool_size, 
 
 int CNN::forward_propagate(Matrix& input, std::vector<Matrix>& conv_activations, std::vector<std::vector<double>>& activations)
 {
+	// We provide the inputs to the convolutional nn and outputs each dense layer which is then appended
+	// as a vector to activations. The output of the convolution layer is appended to conv_activations.
 	assert(weights.size() == 2);
 	Matrix conv = Matrix(input.get_rows() - kernel.get_rows() + 1, input.get_columns() - kernel.get_columns() + 1);
 
@@ -96,6 +98,11 @@ int CNN::forward_propagate(Matrix& input, std::vector<Matrix>& conv_activations,
 int CNN::back_propagate(std::vector<double>& delta_L, std::vector<Matrix>& conv_activations,
 	std::vector<std::vector<double>>& activations, Matrix& input, double(*active_fn_der)(double), double learning_rate)
 {
+	// We compute the deltas of eachg layer
+	// delta_L - is the delta of the final layer, computed and passed as an argument
+	// activations - the output of each layer after applying the acivation function
+	// We assume that all layers have the same activation function except the final layer i.e. relu -> softmax
+	// active_fn_der - is the function pointer of the derivative of the activation function
 	std::vector<double> delta_h = np::dot(weights[1], delta_L, 0);
 	std::vector<double> active = np::apply_function(activations[1], active_fn_der);
 
@@ -136,4 +143,66 @@ int CNN::back_propagate(std::vector<double>& delta_L, std::vector<Matrix>& conv_
 	}
 
 	return 0;
+}
+
+double CNN::cross_entropy(std::vector<double>& ypred, std::vector<double>& ytrue) 
+{
+	// Calculate cross entropy loss if the predictions and true values are given
+	assert(ypred.size() == ytrue.size());
+	std::vector<double> z = np::apply_function(ypred, log);
+	z = np::multiply(z, ytrue);
+	double error = np::element_sum(z);
+	return (-error);
+}
+
+int CNN::train(std::vector<Matrix>& X_train, std::vector<std::vector<double>>& Y_train, double learning_rate, int epochs)
+{
+	// We train the network i.e. update erights such that the error between forward propagation X_train and Y_train is 
+	// minimized. We break X_train and Y_train into batches od size batch_size and run the following:
+	// forward_propagate -> calculate error (cross entropy) -> back propagate -> update weights
+
+	assert(X_train.size() == Y_train.size());
+
+	int e = 1;
+	while (e <= epochs)
+	{
+		int i = 0;
+		double error = 0;
+		while (i < X_train.size())
+		{
+			std::vector<Matrix> conv_activations(2);
+			std::vector<std::vector<double>> activations(3);
+
+			forward_propagate(X_train[i], conv_activations, activations);
+			error += cross_entropy(activations.back(), Y_train[i]);
+
+			std::vector<double> delta_L = np::subtract(activations.back(), Y_train[i]);
+			back_propagate(delta_L, conv_activations, activations, X_train[i], fns::relu_gradient, learning_rate);
+			
+			i++;
+		}
+		std::cout << "epoch: " << e << " error: " << (error / X_train.size()) << std::endl;
+		e++;
+	}
+	return 0;
+}
+
+double CNN::validate(std::vector<Matrix>& X_test, std::vector<std::vector<double>>& Y_test)
+{
+	// Calculate the error over the testing set to see how well the model performed
+	assert(X_test.size() == Y_test.size());
+	int i = 1;
+	double error = 0;
+	while (i <= X_test.size())
+	{
+		std::vector<Matrix> conv_activations(2);
+		std::vector<std::vector<double>> activations(3);
+
+		forward_propagate(X_test[i], conv_activations, activations);
+		error += cross_entropy(activations.back(), Y_test[i]);
+
+		i++;
+	}
+	std::cout << "error: " << (error / X_test.size()) << std::endl;
+	return (error / X_test.size());
 }

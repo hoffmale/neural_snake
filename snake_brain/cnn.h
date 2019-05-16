@@ -21,6 +21,7 @@ private:
 	int back_propagate(std::vector<double>& delta_L, std::vector<Matrix>& conv_activations,
 		std::vector<std::vector<double>>& activations, Matrix& input, double(*active_fn_der)(double), double learning_rate);
 
+	double cross_entropy(std::vector<double>& ypred, std::vector<double>& ytrue);
 	Matrix zero_pad(Matrix& X, int pad);				// Pad with zeros of all the images 
 
 
