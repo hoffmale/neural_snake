@@ -2,6 +2,7 @@
 
 #include "renderer.h"
 
+#define NOMINMAX
 #include <windows.h>
 
 class console_renderer : public renderer

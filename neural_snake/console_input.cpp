@@ -1,4 +1,5 @@
 #include "console_input.h"
+#define NOMINMAX
 #include <windows.h>
 
 console_input::console_input()

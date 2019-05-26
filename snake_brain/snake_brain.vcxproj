@@ -21,12 +21,31 @@
   <ItemGroup>
     <ClInclude Include="ai_controller.h" />
     <ClInclude Include="ai_feedback.h" />
+    <ClInclude Include="back_propagation_trainer.hpp" />
+    <ClInclude Include="functions.h" />
+    <ClInclude Include="functions.hpp" />
+    <ClInclude Include="layer.hpp" />
+    <ClInclude Include="math.hpp" />
+    <ClInclude Include="matrix.h" />
+    <ClInclude Include="network.hpp" />
+    <ClInclude Include="network_trainer.hpp" />
+    <ClInclude Include="neural_layer.h" />
+    <ClInclude Include="neural_network.h" />
     <ClInclude Include="neuron.h" />
+    <ClInclude Include="neuron.hpp" />
+    <ClInclude Include="ranges.hpp" />
+    <ClInclude Include="sample.hpp" />
     <ClInclude Include="snake_brain.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ai_controller.cpp" />
     <ClCompile Include="ai_feedback.cpp" />
+    <ClCompile Include="back_propagation_trainer.cpp" />
+    <ClCompile Include="functions.cpp" />
+    <ClCompile Include="layer.cpp" />
+    <ClCompile Include="network.cpp" />
+    <ClCompile Include="network_trainer.cpp" />
+    <ClCompile Include="neuron.cpp" />
     <ClCompile Include="snake_brain.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

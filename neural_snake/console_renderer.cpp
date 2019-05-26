@@ -2,6 +2,7 @@
 
 #include <unordered_map>
 #include <sstream>
+#define NOMINMAX
 #include <windows.h>
 
 static std::unordered_map<tile_content, char> tile_to_character_map = {
