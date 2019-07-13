@@ -21,7 +21,7 @@ class board_model : public QAbstractListModel
 	Q_PROPERTY(int score   MEMBER score  CONSTANT)
 
 public:
-	board_model(const board* state = nullptr);
+	board_model();
 	board_model(const board_model& other);
 	board_model(board_model&& other) noexcept;
 	~board_model();

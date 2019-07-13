@@ -1,10 +1,9 @@
 #pragma once
 
-#include "controller.h"
-
 #include <QObject>
+#include "simulation.h"
 
-class qt_controller : public QObject, public controller
+class qt_controller : public QObject, public simulation
 {
 	Q_OBJECT
 
@@ -14,6 +13,7 @@ public:
 	qt_controller() = default;
 	qt_controller(const qt_controller& other);
 
+protected:
 	direction next_move() override;
 
 public slots:

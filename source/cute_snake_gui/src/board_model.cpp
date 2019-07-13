@@ -1,10 +1,10 @@
 #include "board_model.h"
 
-board_model::board_model(const board* state)
-	: state{ *state }
+board_model::board_model()
+	: state{}
 	, score{ 0 }
-	, width{ state->width() }
-	, height{ state->height() }
+	, width{ state.width() }
+	, height{ state.height() }
 {
 }
 

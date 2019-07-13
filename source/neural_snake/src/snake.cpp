@@ -2,8 +2,7 @@
 #include <iterator>
 
 snake::snake(board& state, position start, int length)
-	: state{ state }
-	, head{ start }
+	: head{ start }
 {
 	state.tile(head, tile_content::snake_head);
 
@@ -15,30 +14,34 @@ snake::snake(board& state, position start, int length)
 	}
 }
 
-void snake::move(direction dir)
+board snake::move(const board& old_state, direction dir)
 {
-	state.tile(head, tile_content::snake_body);
+	auto next_state = old_state;
+
+	next_state.tile(head, tile_content::snake_body);
 	body_parts.push(head);
 
-	head = next_head(dir);
-	const auto ate_apple = state.tile(head) == tile_content::apple;
-	state.tile(head, tile_content::snake_head);
+	head = next_head(old_state, dir);
+	next_state.tile(head, tile_content::snake_head);
 
+	const auto ate_apple = old_state.tile(head) == tile_content::apple;
 	if(!ate_apple)
 	{
-		state.tile(body_parts.front(), tile_content::empty);
+		next_state.tile(body_parts.front(), tile_content::empty);
 		body_parts.pop();
 	}
+
+	return next_state;
 }
 
-bool snake::can_move(direction dir) const noexcept
+bool snake::can_move(const board& state, direction dir) const noexcept
 {
-	const auto next_pos = next_head(dir);
+	const auto next_pos = next_head(state, dir);
 
 	return state.tile(next_pos) == tile_content::empty || state.tile(next_pos) == tile_content::apple;
 }
 
-position snake::next_head(direction dir) const noexcept
+position snake::next_head(const board& state, direction dir) const noexcept
 {
 	auto next_snake_head = head;
 

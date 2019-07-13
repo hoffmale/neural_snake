@@ -47,6 +47,7 @@ target_link_libraries(
 		Qt5::Core
 		Qt5::Quick
 		neural_snake_lib
+		ai_dumb_deterministic
 )
 
 set_target_properties(

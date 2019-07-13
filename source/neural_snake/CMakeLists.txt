@@ -8,6 +8,7 @@ add_library(${PROJECT_NAME} STATIC)
 
 set(sources
 		${CMAKE_CURRENT_SOURCE_DIR}/src/board.cpp
+		${CMAKE_CURRENT_SOURCE_DIR}/src/simulation.cpp
 		${CMAKE_CURRENT_SOURCE_DIR}/src/snake.cpp
 		${CMAKE_CURRENT_SOURCE_DIR}/src/snake_game.cpp
 )
@@ -18,6 +19,7 @@ set(headers
 		${CMAKE_CURRENT_SOURCE_DIR}/include/direction.h
 		${CMAKE_CURRENT_SOURCE_DIR}/include/position.h
 		${CMAKE_CURRENT_SOURCE_DIR}/include/renderer.h
+		${CMAKE_CURRENT_SOURCE_DIR}/include/simulation.h
 		${CMAKE_CURRENT_SOURCE_DIR}/include/snake.h
 		${CMAKE_CURRENT_SOURCE_DIR}/include/snake_game.h
 		${CMAKE_CURRENT_SOURCE_DIR}/include/tile_content.h

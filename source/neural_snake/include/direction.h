@@ -1,8 +1,8 @@
 #pragma once
 
-enum class direction
+enum class direction : int
 {
-	up,
+	up = 0,
 	down,
 	left,
 	right

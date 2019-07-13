@@ -9,6 +9,26 @@ struct position
 
 	bool operator==(const position other) const noexcept { return x == other.x && y == other.y; }
 	bool operator!=(const position other) const noexcept { return !(*this == other); }
+
+	position down(int steps = 1) const
+	{
+		return position{ x, y + steps };
+	}
+
+	position up(int steps = 1) const
+	{
+		return position{ x, y - steps };
+	}
+
+	position left(int steps = 1) const
+	{
+		return position{ x - steps, y };
+	}
+
+	position right(int steps = 1) const
+	{
+		return  position{ x + steps, y };
+	}
 };
 
 namespace std
